@@ -1,0 +1,14 @@
+{
+    "name": "acs/annonces",
+    "description": "Annonces",
+    "authors": [
+        {
+            "name": "Ayoub mchichi",
+            "email": "a.mchichi@laposte.net"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.3",
+      "ext-pdo": "*"
+    }
+}
