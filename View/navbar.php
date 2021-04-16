@@ -37,16 +37,23 @@
             if (isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true) {
                 ?>
                 <div class="flex">
-                    <img alt="avatar" class="w-12 rounded-full border-2 border-blue-700"
+                    <img alt="avatar" class="w-12 h-12 rounded-full border-2 border-blue-700"
                          src="<?= $_SESSION['image'] ?>"/>
-                    <p class="ml-6 font-bold text-blue-700 mt-2"><?= $_SESSION['username'] . ' ' . $_SESSION['lastname'] ?></p>
+                    <p class="ml-6 font-bold text-blue-700 mt-2"><?= $_SESSION['username'] . ' ' . '(' . $_SESSION['role'] . ')' ?></p>
                 </div>
 
                 <a href="utilisateur"
-                   class=" block text-md px-4 ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">Mes annonces</a>
+                   class=" block text-md px-4 ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 md:mt-0">Mes
+                    annonces</a>
+                <?php
+                if (isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true && $_SESSION['role'] == "admin") {
+                    ?>
+                    <a href="admin"
+                       class=" block text-md px-4 ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 md:mt-0">Gestion des
+                        annonces</a>
+                <?php } ?>
                 <a href="deconnexion"
-                   class=" block text-md px-4 ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">Deconnexion</a>
-
+                   class=" block text-md px-4 ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 md:mt-0">Deconnexion</a>
                 <?php
             } else {
                 ?>

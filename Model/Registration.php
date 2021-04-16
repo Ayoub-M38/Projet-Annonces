@@ -16,8 +16,9 @@ class Registration extends Database
     private $user_email;
     private $user_password;
     private $image;
+    private $role;
 
-    public function confirmRegitration()
+    public function confirmRegistration()
     {
 
         //Instantiation and passing `true` enables exceptions
@@ -52,6 +53,7 @@ class Registration extends Database
             $this->user_email = $_POST['user_email'];
             $this->user_password = $_POST['user_password'];
             $this->image = $_POST['image'];
+            $this->role = $_POST['role'];
 
 
 
@@ -61,7 +63,7 @@ class Registration extends Database
             $mail->isHTML(true);
 
             //input user into table users
-            $getUsers = $db->prepare("INSERT INTO `utilisateurs`(`prenom_utilisateur`, `nom_utilisateur`, `email_utilisateur`, `password_utilisateur`, `image_utilisateur`) VALUES (?,?,?,?,?)");
+            $getUsers = $db->prepare("INSERT INTO `utilisateurs`(`prenom_utilisateur`, `nom_utilisateur`, `email_utilisateur`, `password_utilisateur`, `image_utilisateur`, `role`) VALUES (?,?,?,?,?,?)");
 
             //bind Param
             $getUsers->bindParam(1, $this->username);
@@ -69,6 +71,8 @@ class Registration extends Database
             $getUsers->bindParam(3, $this->user_email);
             $getUsers->bindParam(4, $this->user_password);
             $getUsers->bindParam(5, $this->image);
+            $getUsers->bindParam(6, $this->role);
+
 
             //Execute query
             $getUsers->execute();

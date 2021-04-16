@@ -10,6 +10,8 @@ class Users extends Database
     private $image;
     private $username;
     private $lastname;
+    private $role;
+
 
     // Method user login
     public function userLogin()
@@ -39,8 +41,10 @@ class Users extends Database
             $this->image = $row['image_utilisateur'];
             $this->username = $row['prenom_utilisateur'];
             $this->lastname = $row['nom_utilisateur'];
+            $this->role = $row['role'];
 
-            if($this->user_email == $row['email_utilisateur'] && $this->user_password == $row['password_utilisateur'] && $this->image == $row['image_utilisateur'] && $this->username == $row['prenom_utilisateur'] && $this->lastname == $row['nom_utilisateur']){
+
+            if($this->user_email == $row['email_utilisateur'] && $this->user_password == $row['password_utilisateur'] && $this->image == $row['image_utilisateur'] && $this->username == $row['prenom_utilisateur'] && $this->lastname == $row['nom_utilisateur'] && $this->role == $row['role']) {
                 //start our session
                 //session_start();
                 $_SESSION['user_connexion'] = true;
@@ -49,12 +53,18 @@ class Users extends Database
                 $_SESSION['image'] = $this->image;
                 $_SESSION['username'] = $this->username;
                 $_SESSION['lastname'] = $this->lastname;
-                header('Location: http://localhost/annonces/utilisateur');
-                var_dump($_SESSION['email_user']);
-                var_dump($_SESSION['id_user']);
-                var_dump($_SESSION['image']);
-                var_dump($_SESSION['username']);
-                echo 'you are connected';
+                $_SESSION['role'] = $this->role;
+                if ($_SESSION['role'] == "admin"){
+                    header('Location: http://localhost/annonces/admin');
+                }else{
+                    header('Location: http://localhost/annonces/utilisateur');
+                }
+                //var_dump($_SESSION['email_user']);
+                //var_dump($_SESSION['id_user']);
+                //var_dump($_SESSION['image']);
+                //var_dump($_SESSION['username']);
+                //var_dump($_SESSION['role']);
+
             }else{
                 echo '<div role="alert">
               <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
@@ -65,17 +75,17 @@ class Users extends Database
               </div>
             </div>';
             }
+
         }else{
             echo '<div role="alert">
               <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
                 Erreur !
               </div>
               <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-                <p>Aucun utilisateur ne possèdent cet email et mot de passe</p>
+                <p>Merci de vérifié votre email et mot de passe</p>
               </div>
             </div>';
         }
-
 
     }
 }

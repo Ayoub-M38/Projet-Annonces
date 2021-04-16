@@ -1229,7 +1229,12 @@
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="374" parent="341" name="PRIMARY">
+    <column id="374" parent="341" name="role">
+      <Position>7</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="375" parent="341" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_utilisateur</ColNames>
       <Primary>1</Primary>

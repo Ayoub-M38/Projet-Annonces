@@ -4,13 +4,13 @@ ob_start();
 //require all our controllers
 require_once '../Controller/ProductController.php';
 require_once '../Controller/UsersController.php';
+require_once '../Controller/AdminController.php';
 
 
 if (isset($_GET['url'])) {
     $url = $_GET['url'];
 } else {
     $url = "accueil";
-
 }
 
 /**
@@ -99,11 +99,53 @@ if ($url === "accueil") {
 ($url === "utilisateur" && isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true) {
     $title = "Compte Utilisateur";
     fetchProductsByUser();
+} elseif
+($url === "admin" && isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true) {
+    $title = "Compte admin";
+    fetchProductsByAdmin();
+} elseif
+($url === "table_utilisateurs" && isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true) {
+    $title = "Gestion Utilisateurs";
+    fetchUsersTable();
 
-} elseif ($url === "details" && isset($_GET['product_id']) && $_GET['product_id'] > 0 ){
+} elseif ($url === "details" && isset($_GET['product_id']) && $_GET['product_id'] > 0) {
     $title = 'Détails Annonce';
     productDetails();
+} elseif ($url === "contact_vendeur") {
+    $title = "Contacter le vendeur";
+    userId($_GET['id']);
+} elseif (isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true && $url === "supprimer_utilisateur" && isset($_GET['delete_id']) && $_GET['delete_id'] > 0) {
+    deleteUserByID();
+} elseif (isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true && $url === "supprimer_announce" && isset($_GET['delete_id']) && $_GET['delete_id'] > 0) {
+    deleteAnnonce();
+} elseif ($url === "recherche") {
+    $title = "Recherche";
+    searchByKw();
+
+} elseif (isset($_SESSION['user_connexion']) && $_SESSION['user_connexion'] === true && $url === "ajouter_annonce") {
+    $title = "Ajouter une annonce";
+    require_once '../View/ajouter_annonce.php';
+    $addForm = false;
+
+    var_dump($_POST['nom_produit']);
+    var_dump($_POST['description_produit']);
+    var_dump($_POST['prix_produit']);
+    var_dump($_POST['categorie_id']);
+    var_dump($_POST['region_id']);
+    var_dump($_FILES['photo_produit']);
+    var_dump($_POST['id_user']);
+    var_dump($_POST['date_depot']);
+
+
+    if (isset($_POST['nom_produit']) && isset($_POST['description_produit']) && isset($_POST['prix_produit']) && isset($_POST['categorie_id']) && isset($_POST['region_id']) && isset($_POST['photo_produit']) && isset($_SESSION['id_user']) && isset($_POST['date_depot'])) {
+        $addForm = true;
+        if ($addForm) {
+            addAnnonce($_POST['nom_produit'], $_POST['description_produit'], $_POST['prix_produit'], $_POST['categorie_id'], $_POST['region_id'], $_POST['photo_produit'], $_SESSION['id_user'], $_POST['date_depot']);
+        } else {
+            echo 'Failed';
+        }
+    }
 }
-    $content = ob_get_clean();
+$content = ob_get_clean();
 require_once 'template.php';
 

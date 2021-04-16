@@ -8,7 +8,7 @@
     <title><?= $title ?></title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-50">
 <header>
     <?=
     require_once "navbar.php";
